@@ -1,0 +1,57 @@
+= Proc_rollback
+
+Lets you rollback the side effects of a Proc by resetting the modified instance variables.
+*Does not work on native code!*
+
+
+== Usage
+
+  @x = 0
+  def increment
+    @x += 1
+  end
+
+  p = proc{ increment }
+  p.call_rollbackable   # => 2
+  p.call                # => 3
+  p.rollback
+  p.call                # => 3
+
+
+== Compatability
+
+Proc_rollback currently needs a patch that only works for MRI 1.8.7. Check for details at
+http://redmine.ruby-lang.org/issues/4583
+
+Test results and patches for other environments are greatly appreciated!
+
+
+== Installation
+
+You can install proc_rollback via rubygems.
+
+  gem install proc_rollback
+
+Or you can use Bundler.
+
+  echo "gem 'proc_rollback'" >> Gemfile
+  bundle install
+
+That way, you can easily switch to the bleeding edge directly from the github repository.
+
+  gem 'proc_rollback', :git => 'git://github.com/QaDeS/proc_rollback.git'
+
+
+== Contributing
+
+For bug reports and feature requests, use the github tracker at
+https://github.com/QaDeS/proc_rollback/issues
+
+If you want to get your hands dirty, please fork the project at
+https://github.com/QaDeS/proc_rollback
+
+
+== Copyright
+
+Copyright (c) 2011 Michael Klaus. See LICENSE for details.
+
