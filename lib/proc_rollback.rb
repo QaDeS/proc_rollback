@@ -5,13 +5,13 @@ end
 o = c.new
 Thread.new do
   result = false
-  Thread.current.set_trace_func lambda {|type, file, line, mth, bnd, cls|
+  Thread.current.send :set_trace_func, lambda {|type, file, line, mth, bnd, cls|
     result = true if mth == :foo= and eval('self',bnd) == o
   }
   o.foo=o.foo
-  Thread.current.set_trace_func nil
+  Thread.current.send :set_trace_func, nil
   result
-end.value || puts("Tracing of attr_* methods does not work. Check http://redmine.ruby-lang.org/issues/4583 to see which ruby version you can use. Proc_rollback will not work in some cases.")
+end.value or puts("Tracing of attr_* methods does not work. Check http://redmine.ruby-lang.org/issues/4583 to see which ruby version you can use. Proc_rollback will not work in some cases.")
 
 # add rollbackablility to Proc
 class Proc
